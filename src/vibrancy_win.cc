@@ -151,20 +151,21 @@ namespace Vibrancy {
 
 
             v8::Isolate* isolate = v8::Isolate::GetCurrent();
+            v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
             V8Value vPosition = options->Get(
-                v8::String::NewFromUtf8(isolate, "Position"));
-            V8Value vSize = options->Get(v8::String::NewFromUtf8(isolate, "Size"));
+                context, v8::String::NewFromUtf8(isolate, "Position"));
+            V8Value vSize = options->Get(context, v8::String::NewFromUtf8(isolate, "Size"));
 
             V8Value vAutoResizeMask = options->Get(
-                v8::String::NewFromUtf8(isolate, "ResizeMask"));
+                context, v8::String::NewFromUtf8(isolate, "ResizeMask"));
             V8Value vViewId = options->Get(
-                v8::String::NewFromUtf8(isolate, "ViewId"));
+                context, v8::String::NewFromUtf8(isolate, "ViewId"));
             V8Value vMaterial = options->Get(
-                v8::String::NewFromUtf8(isolate, "Material"));
+                context, v8::String::NewFromUtf8(isolate, "Material"));
 
             V8Value borderRadius = options->Get(
-                v8::String::NewFromUtf8(isolate, "BorderRadius"));
+                context, v8::String::NewFromUtf8(isolate, "BorderRadius"));
 
             if (!borderRadius->IsNull() && borderRadius->IsInt32()) {
                 opt.borderRadius = Nan::To<int32_t>(borderRadius).FromJust();
@@ -176,9 +177,9 @@ namespace Vibrancy {
                     v8::Local<v8::Array>::Cast(vSize);
 
                 V8Value vWidth =
-                    vaSize->Get(v8::String::NewFromUtf8(isolate, "width"));
+                    vaSize->Get(context, v8::String::NewFromUtf8(isolate, "width"));
                 V8Value vHeight =
-                    vaSize->Get(v8::String::NewFromUtf8(isolate, "height"));
+                    vaSize->Get(context, v8::String::NewFromUtf8(isolate, "height"));
 
                 if (!vWidth->IsNull() && vWidth->IsInt32())
                     opt.vWidth = Nan::To<int32_t>(vWidth).FromJust();
@@ -190,8 +191,8 @@ namespace Vibrancy {
             if (!vPosition->IsUndefined() && !vPosition->IsNull()) {
                 V8Array vaPosition = v8::Local<v8::Array>::Cast(vPosition);
 
-                V8Value vX = vaPosition->Get(v8::String::NewFromUtf8(isolate, "x"));
-                V8Value vY = vaPosition->Get(v8::String::NewFromUtf8(isolate, "y"));
+                V8Value vX = vaPosition->Get(context, v8::String::NewFromUtf8(isolate, "x"));
+                V8Value vY = vaPosition->Get(context, v8::String::NewFromUtf8(isolate, "y"));
 
                 if (!vX->IsNull() && vX->IsInt32())
                     opt.vX = Nan::To<int32_t>(vX).FromJust();
