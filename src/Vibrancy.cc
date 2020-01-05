@@ -83,7 +83,7 @@ namespace Vibrancy {
         if (handleBuffer->IsNull())
             return;
 
-        bool toggleState = toggleStateObj->BooleanValue(Nan::GetCurrentContext()).FromJust();
+        bool toggleState = Nan::To<bool>(toggleStateObj).FromJust();
 
         char* bufferData = node::Buffer::Data(handleBuffer);
 
