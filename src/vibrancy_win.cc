@@ -152,55 +152,59 @@ namespace Vibrancy {
 
             v8::Isolate* isolate = v8::Isolate::GetCurrent();
             v8::Local<v8::Context> context = isolate->GetCurrentContext();
+            V8Value vPosition, vSize, vAutoResizeMask,
+                vViewId, vMaterial, borderRadius;
 
-            V8Value vPosition = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "Position")).ToLocalChecked();
-            V8Value vSize = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "Size")).ToLocalChecked();
+            bool hasPosition = options->Get(
+                context, v8::String::NewFromUtf8(isolate, "Position").ToLocalChecked()).ToLocal(&vPosition);
+            bool hasSize = options->Get(
+                context, v8::String::NewFromUtf8(isolate, "Size").ToLocalChecked()).ToLocal(&vSize);
 
-            V8Value vAutoResizeMask = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "ResizeMask")).ToLocalChecked();
-            V8Value vViewId = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "ViewId")).ToLocalChecked();
-            V8Value vMaterial = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "Material")).ToLocalChecked();
+            bool hasAutoResizeMask = options->Get(
+                context, v8::String::NewFromUtf8(isolate, "ResizeMask").ToLocalChecked()).ToLocal(&vAutoResizeMask);
+            bool hasViewId = options->Get(
+                context, v8::String::NewFromUtf8(isolate, "ViewId").ToLocalChecked()).ToLocal(&vViewId);
+            bool hasMaterial = options->Get(
+                context, v8::String::NewFromUtf8(isolate, "Material").ToLocalChecked()).ToLocal(&vMaterial);
 
-            V8Value borderRadius = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "BorderRadius")).ToLocalChecked();
+            bool hasBorderRadius = options->Get(
+                context, v8::String::NewFromUtf8(isolate, "BorderRadius").ToLocalChecked()).ToLocal(&borderRadius);
 
-            if (!borderRadius->IsNull() && borderRadius->IsInt32()) {
+            if (hasBorderRadius && !borderRadius->IsNull() && borderRadius->IsInt32()) {
                 opt.borderRadius = Nan::To<int32_t>(borderRadius).FromJust();
             }
             
 
-            if (!vSize->IsUndefined() && !vSize->IsNull()) {
+            if (hasSize && !vSize->IsUndefined() && !vSize->IsNull()) {
                 V8Array vaSize =
                     v8::Local<v8::Array>::Cast(vSize);
+                V8Value vWidth, vHeight;
 
-                V8Value vWidth = vaSize->Get(
-                    context, v8::String::NewFromUtf8(isolate, "width")).ToLocalChecked();
-                V8Value vHeight = vaSize->Get(
-                    context, v8::String::NewFromUtf8(isolate, "height")).ToLocalChecked();
+                bool hasWidth = vaSize->Get(
+                    context, v8::String::NewFromUtf8(isolate, "width").ToLocalChecked()).ToLocal(&vWidth);
+                bool hasHeight = vaSize->Get(
+                    context, v8::String::NewFromUtf8(isolate, "height").ToLocalChecked()).ToLocal(&vHeight);
 
-                if (!vWidth->IsNull() && vWidth->IsInt32())
+                if (hasWidth && !vWidth->IsNull() && vWidth->IsInt32())
                     opt.vWidth = Nan::To<int32_t>(vWidth).FromJust();
 
-                if (!vHeight->IsNull() && vHeight->IsInt32())
+                if (hasHeight && !vHeight->IsNull() && vHeight->IsInt32())
                     opt.vHeight = Nan::To<int32_t>(vHeight).FromJust();
             }
 
-            if (!vPosition->IsUndefined() && !vPosition->IsNull()) {
+            if (hasPosition && !vPosition->IsUndefined() && !vPosition->IsNull()) {
                 V8Array vaPosition = v8::Local<v8::Array>::Cast(vPosition);
+                V8Value vX, vY;
 
-                V8Value vX = vaPosition->Get(
-                    context, v8::String::NewFromUtf8(isolate, "x")).ToLocalChecked();
-                V8Value vY = vaPosition->Get(
-                    context, v8::String::NewFromUtf8(isolate, "y")).ToLocalChecked();
+                bool hasX = vaPosition->Get(
+                    context, v8::String::NewFromUtf8(isolate, "x").ToLocalChecked()).ToLocal(&vX);
+                bool hasY = vaPosition->Get(
+                    context, v8::String::NewFromUtf8(isolate, "y").ToLocalChecked()).ToLocal(&vY);
 
-                if (!vX->IsNull() && vX->IsInt32())
+                if (hasX && !vX->IsNull() && vX->IsInt32())
                     opt.vX = Nan::To<int32_t>(vX).FromJust();
 
-                if (!vY->IsNull() && vY->IsInt32())
+                if (hasY && !vY->IsNull() && vY->IsInt32())
                     opt.vY = Nan::To<int32_t>(vY).FromJust();
             }
 
