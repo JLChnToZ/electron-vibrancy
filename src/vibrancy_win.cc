@@ -156,19 +156,19 @@ namespace Vibrancy {
                 vViewId, vMaterial, borderRadius;
 
             bool hasPosition = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "Position")).ToLocal(&vPosition);
+                context, Nan::New("Position").ToLocalChecked()).ToLocal(&vPosition);
             bool hasSize = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "Size")).ToLocal(&vSize);
+                context, Nan::New("Size").ToLocalChecked()).ToLocal(&vSize);
 
             bool hasAutoResizeMask = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "ResizeMask")).ToLocal(&vAutoResizeMask);
+                context, Nan::New("ResizeMask").ToLocalChecked()).ToLocal(&vAutoResizeMask);
             bool hasViewId = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "ViewId")).ToLocal(&vViewId);
+                context, Nan::New("ViewId").ToLocalChecked()).ToLocal(&vViewId);
             bool hasMaterial = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "Material")).ToLocal(&vMaterial);
+                context, Nan::New("Material").ToLocalChecked()).ToLocal(&vMaterial);
 
             bool hasBorderRadius = options->Get(
-                context, v8::String::NewFromUtf8(isolate, "BorderRadius")).ToLocal(&borderRadius);
+                context, Nan::New("BorderRadius").ToLocalChecked()).ToLocal(&borderRadius);
 
             if (hasBorderRadius && !borderRadius->IsNull() && borderRadius->IsInt32()) {
                 opt.borderRadius = Nan::To<int32_t>(borderRadius).FromJust();
@@ -181,9 +181,9 @@ namespace Vibrancy {
                 V8Value vWidth, vHeight;
 
                 bool hasWidth = vaSize->Get(
-                    context, v8::String::NewFromUtf8(isolate, "width")).ToLocal(&vWidth);
+                    context, Nan::New("width").ToLocalChecked()).ToLocal(&vWidth);
                 bool hasHeight = vaSize->Get(
-                    context, v8::String::NewFromUtf8(isolate, "height")).ToLocal(&vHeight);
+                    context, Nan::New("height").ToLocalChecked()).ToLocal(&vHeight);
 
                 if (hasWidth && !vWidth->IsNull() && vWidth->IsInt32())
                     opt.vWidth = Nan::To<int32_t>(vWidth).FromJust();
@@ -197,9 +197,9 @@ namespace Vibrancy {
                 V8Value vX, vY;
 
                 bool hasX = vaPosition->Get(
-                    context, v8::String::NewFromUtf8(isolate, "x")).ToLocal(&vX);
+                    context, Nan::New("x").ToLocalChecked()).ToLocal(&vX);
                 bool hasY = vaPosition->Get(
-                    context, v8::String::NewFromUtf8(isolate, "y")).ToLocal(&vY);
+                    context, Nan::New("y").ToLocalChecked()).ToLocal(&vY);
 
                 if (hasX && !vX->IsNull() && vX->IsInt32())
                     opt.vX = Nan::To<int32_t>(vX).FromJust();
