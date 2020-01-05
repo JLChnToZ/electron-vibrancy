@@ -167,7 +167,7 @@ namespace Vibrancy {
                 v8::String::NewFromUtf8(isolate, "BorderRadius"));
 
             if (!borderRadius->IsNull() && borderRadius->IsInt32()) {
-                opt.borderRadius = borderRadius->Int32Value();
+                opt.borderRadius = Nan::To<int32_t>(borderRadius).FromJust();
             }
             
 
@@ -181,10 +181,10 @@ namespace Vibrancy {
                     vaSize->Get(v8::String::NewFromUtf8(isolate, "height"));
 
                 if (!vWidth->IsNull() && vWidth->IsInt32())
-                    opt.vWidth = vWidth->Int32Value();
+                    opt.vWidth = Nan::To<int32_t>(vWidth).FromJust();
 
                 if (!vHeight->IsNull() && vHeight->IsInt32())
-                    opt.vHeight = vHeight->Int32Value();
+                    opt.vHeight = Nan::To<int32_t>(vHeight).FromJust();
             }
 
             if (!vPosition->IsUndefined() && !vPosition->IsNull()) {
@@ -194,10 +194,10 @@ namespace Vibrancy {
                 V8Value vY = vaPosition->Get(v8::String::NewFromUtf8(isolate, "y"));
 
                 if (!vX->IsNull() && vX->IsInt32())
-                    opt.vX = vX->Int32Value();
+                    opt.vX = Nan::To<int32_t>(vX).FromJust();
 
                 if (!vY->IsNull() && vY->IsInt32())
-                    opt.vY = vY->Int32Value();
+                    opt.vY = Nan::To<int32_t>(vY).FromJust();
             }
 
             // RECT rect;  
