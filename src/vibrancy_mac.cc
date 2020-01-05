@@ -144,10 +144,11 @@ namespace Vibrancy {
 
     bool VibrancyHelper::RemoveView(unsigned char* buffer,
         v8::Local<v8::Array> options) {
+        v8::Isolate* isolate = v8::Isolate::GetCurrent();
+        v8::Local<v8::Context> context = isolate->GetCurrentContext();
         bool result = false;
-        V8Value vView =
-            options->Get(
-                v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), "ViewId"));
+        V8Value vView = options->Get(
+            context, v8::String::NewFromUtf8(isolate, "ViewId")).ToLocalChecked();
 
         if (vView->IsNull() || !vView->IsInt32())
             return result;
@@ -187,17 +188,19 @@ namespace Vibrancy {
         viewOptions.Material = 0;
 
         v8::Isolate* isolate = v8::Isolate::GetCurrent();
+        v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
         V8Value vPosition = options->Get(
-            v8::String::NewFromUtf8(isolate, "Position"));
-        V8Value vSize = options->Get(v8::String::NewFromUtf8(isolate, "Size"));
+            context, v8::String::NewFromUtf8(isolate, "Position")).ToLocalChecked();
+        V8Value vSize = options->Get(
+            context, v8::String::NewFromUtf8(isolate, "Size")).ToLocalChecked();
 
         V8Value vAutoResizeMask = options->Get(
-            v8::String::NewFromUtf8(isolate, "ResizeMask"));
+            context, v8::String::NewFromUtf8(isolate, "ResizeMask")).ToLocalChecked();
         V8Value vViewId = options->Get(
-            v8::String::NewFromUtf8(isolate, "ViewId"));
+            context, v8::String::NewFromUtf8(isolate, "ViewId")).ToLocalChecked();
         V8Value vMaterial = options->Get(
-            v8::String::NewFromUtf8(isolate, "Material"));
+            context, v8::String::NewFromUtf8(isolate, "Material")).ToLocalChecked();
 
         if (!vMaterial->IsNull() && vMaterial->IsInt32()) {
             viewOptions.Material = Nan::To<int32_t>(vMaterial).FromJust();
@@ -210,10 +213,10 @@ namespace Vibrancy {
             V8Array vaSize =
                 v8::Local<v8::Array>::Cast(vSize);
 
-            V8Value vWidth =
-                vaSize->Get(v8::String::NewFromUtf8(isolate, "width"));
-            V8Value vHeight =
-                vaSize->Get(v8::String::NewFromUtf8(isolate, "height"));
+            V8Value vWidth = vaSize->Get(
+                context, v8::String::NewFromUtf8(isolate, "width")).ToLocalChecked();
+            V8Value vHeight = vaSize->Get(
+                context, v8::String::NewFromUtf8(isolate, "height")).ToLocalChecked();
 
             if (!vWidth->IsNull() && vWidth->IsInt32())
                 viewOptions.Width = Nan::To<int32_t>(vWidth).FromJust();
@@ -225,8 +228,10 @@ namespace Vibrancy {
         if (!vPosition->IsUndefined() && !vPosition->IsNull()) {
             V8Array vaPosition = v8::Local<v8::Array>::Cast(vPosition);
 
-            V8Value vX = vaPosition->Get(v8::String::NewFromUtf8(isolate, "x"));
-            V8Value vY = vaPosition->Get(v8::String::NewFromUtf8(isolate, "y"));
+            V8Value vX = vaPosition->Get(
+                context, v8::String::NewFromUtf8(isolate, "x")).ToLocalChecked();
+            V8Value vY = vaPosition->Get(
+                context, v8::String::NewFromUtf8(isolate, "y")).ToLocalChecked();
 
             if (!vX->IsNull() && vX->IsInt32())
                 viewOptions.X = Nan::To<int32_t>(vX).FromJust();
